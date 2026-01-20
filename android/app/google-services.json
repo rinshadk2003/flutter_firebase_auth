@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "525781420854",
+    "project_id": "loginorregister-f2f54",
+    "storage_bucket": "loginorregister-f2f54.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:525781420854:android:cc47c8a8a03ddb59020197",
+        "android_client_info": {
+          "package_name": "com.example.loginorregister"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDSUMBEYE3tk7-tu7ROW_VPnhNeOGDqRng"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
