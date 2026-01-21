@@ -7,25 +7,10 @@ import '../providers/authprovider.dart';
 import '../widgets/CustomTextfield.dart';
 import '../widgets/costumbutton.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class LoginScreen extends StatelessWidget {
+  LoginScreen({super.key});
 
-  @override
-  State<LoginScreen> createState() => _LoginScreenState();
-}
-
-class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
-
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-
-  @override
-  void dispose() {
-    emailController.dispose();
-    passwordController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,13 +25,16 @@ class _LoginScreenState extends State<LoginScreen> {
             children: [
               const Spacer(),
 
-              CoTextField(hintText: 'Email', controller: emailController),
+              CoTextField(
+                hintText: 'Email',
+                controller: authProvider.emailController,
+              ),
 
               const SizedBox(height: 20),
 
               CoTextField(
                 hintText: 'Password',
-                controller: passwordController,
+                controller: authProvider.passwordController,
                 obscureText: true,
               ),
 
@@ -58,20 +46,14 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(height: 20),
 
               MyButton(
-                text: authProvider.isLoading ? 'Logging in...' : 'Login',
                 onTap: authProvider.isLoading
                     ? null
                     : () async {
                         if (!_formKey.currentState!.validate()) return;
-
                         try {
                           final userCredential = await context
                               .read<AuthProvider>()
-                              .signInWithEmail(
-                                emailController.text.trim(),
-                                passwordController.text.trim(),
-                              );
-
+                              .signInWithEmail();
                           if (userCredential != null) {
                             Navigator.pushReplacement(
                               context,
@@ -79,10 +61,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                 builder: (_) => const Homescreen(),
                               ),
                             );
-
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(content: Text('Login successful')),
                             );
+                            authProvider.clearControllers();
                           }
                         } catch (e) {
                           ScaffoldMessenger.of(
@@ -90,6 +72,16 @@ class _LoginScreenState extends State<LoginScreen> {
                           ).showSnackBar(SnackBar(content: Text(e.toString())));
                         }
                       },
+                child: authProvider.isLoading
+                    ? const CircularProgressIndicator(color: Colors.white)
+                    : Text(
+                        "Login",
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                      ),
               ),
 
               const Spacer(),
@@ -107,7 +99,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (_) => const RegisterScreen(),
+                          builder: (_) => RegisterScreen(),
                         ),
                       );
                     },

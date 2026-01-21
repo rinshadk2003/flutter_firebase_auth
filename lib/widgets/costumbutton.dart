@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
 
 class MyButton extends StatelessWidget {
-  final String text;
+  Widget child;
   final VoidCallback? onTap;
 
-  const MyButton({
-    super.key,
-    required this.text,
-    required this.onTap,
-  });
+  MyButton({super.key, required this.onTap, required this.child});
 
   @override
   Widget build(BuildContext context) {
@@ -17,19 +13,8 @@ class MyButton extends StatelessWidget {
       child: Container(
         width: double.infinity,
         height: 50,
-        decoration: const BoxDecoration(
-          color: Colors.black,
-        ),
-        child: Center(
-          child: Text(
-            text,
-            style: const TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              fontSize: 16,
-            ),
-          ),
-        ),
+        decoration: const BoxDecoration(color: Colors.black),
+        child: Center(child: child),
       ),
     );
   }

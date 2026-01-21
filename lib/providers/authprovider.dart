@@ -8,14 +8,19 @@ class AuthProvider extends ChangeNotifier {
   bool isLoading = false;
   String? errorMessage;
 
-  Future<UserCredential?> signInWithEmail(String email, String password) async {
+  TextEditingController nameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController confirmPasswordController = TextEditingController();
+
+  Future<UserCredential?> signInWithEmail() async {
     try {
       isLoading = true;
       notifyListeners();
 
       final userCredential = await _auth.signInWithEmailAndPassword(
-        email: email,
-        password: password,
+        email: emailController.text.trim(),
+        password: passwordController.text.trim(),
       );
 
       return userCredential;
@@ -29,8 +34,7 @@ class AuthProvider extends ChangeNotifier {
   }
 
   Future<UserCredential?> registerWithEmail(
-    String email,
-    String password,
+
   ) async {
     try {
       isLoading = true;
@@ -38,8 +42,8 @@ class AuthProvider extends ChangeNotifier {
       notifyListeners();
 
       final userCredential = await _auth.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
+        email: emailController.text.trim(),
+        password: passwordController.text.trim(),
       );
 
       return userCredential;
@@ -51,7 +55,6 @@ class AuthProvider extends ChangeNotifier {
       notifyListeners();
     }
   }
-
 
   Future<void> logout() async {
     try {
@@ -67,5 +70,12 @@ class AuthProvider extends ChangeNotifier {
       isLoading = false;
       notifyListeners();
     }
+  }
+
+  void clearControllers() {
+    nameController.clear();
+    emailController.clear();
+    passwordController.clear();
+    confirmPasswordController.clear();
   }
 }

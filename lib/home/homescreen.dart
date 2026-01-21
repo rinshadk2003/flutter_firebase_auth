@@ -47,8 +47,8 @@ class Homescreen extends StatelessWidget {
 
               Navigator.pushAndRemoveUntil(
                 context,
-                MaterialPageRoute(builder: (_) => const LoginScreen()),
-                    (route) => false,
+                MaterialPageRoute(builder: (_) => LoginScreen()),
+                (route) => false,
               );
             },
             child: const Text('Logout'),
