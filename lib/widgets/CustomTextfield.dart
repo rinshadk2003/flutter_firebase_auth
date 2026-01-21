@@ -15,6 +15,7 @@ class CoTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      cursorColor: Colors.black,
       controller: controller,
       obscureText: obscureText,
       validator: (value) {
@@ -45,6 +46,7 @@ class CoTextField extends StatelessWidget {
           vertical: 14,
         ),
         focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(0),
           borderSide: const BorderSide(color: Colors.black),
         )
       ),
