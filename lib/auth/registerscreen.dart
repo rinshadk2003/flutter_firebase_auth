@@ -24,7 +24,6 @@ class RegisterScreen extends StatelessWidget {
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(const SnackBar(content: Text('Registration successful')));
-      authProvider.clearControllers();
       Navigator.pop(context);
     } catch (e) {
       ScaffoldMessenger.of(

@@ -64,7 +64,6 @@ class LoginScreen extends StatelessWidget {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(content: Text('Login successful')),
                             );
-                            authProvider.clearControllers();
                           }
                         } catch (e) {
                           ScaffoldMessenger.of(
@@ -98,9 +97,7 @@ class LoginScreen extends StatelessWidget {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(
-                          builder: (_) => RegisterScreen(),
-                        ),
+                        MaterialPageRoute(builder: (_) => RegisterScreen()),
                       );
                     },
                     child: const Text(

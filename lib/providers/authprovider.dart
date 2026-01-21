@@ -24,13 +24,14 @@ class AuthProvider extends ChangeNotifier {
         email: emailController.text.trim(),
         password: passwordController.text.trim(),
       );
-      setLoginStatus(true);
+      await setLoginStatus(true);
       return userCredential;
     } on FirebaseAuthException catch (e) {
       errorMessage = e.message;
       rethrow;
     } finally {
       isLoading = false;
+      clearControllers();
       notifyListeners();
     }
   }
@@ -62,6 +63,7 @@ class AuthProvider extends ChangeNotifier {
       rethrow;
     } finally {
       isLoading = false;
+      clearControllers();
       notifyListeners();
     }
   }
@@ -72,7 +74,7 @@ class AuthProvider extends ChangeNotifier {
       errorMessage = null;
       notifyListeners();
       await _auth.signOut();
-      setLoginStatus(false);
+      await setLoginStatus(false);
     } catch (e) {
       errorMessage = e.toString();
       rethrow;
