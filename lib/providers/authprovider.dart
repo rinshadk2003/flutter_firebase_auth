@@ -1,9 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 class AuthProvider extends ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final usersCollection = FirebaseFirestore.instance.collection('users');
 
   bool isLoading = false;
   String? errorMessage;
@@ -33,9 +34,7 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
-  Future<UserCredential?> registerWithEmail(
-
-  ) async {
+  Future<UserCredential?> registerWithEmail() async {
     try {
       isLoading = true;
       errorMessage = null;
@@ -45,6 +44,11 @@ class AuthProvider extends ChangeNotifier {
         email: emailController.text.trim(),
         password: passwordController.text.trim(),
       );
+      await usersCollection.doc(userCredential.user!.uid).set({
+        'name': nameController.text.trim(),
+        'email': emailController.text.trim(),
+        'createdAt': DateTime.now().toUtc().toIso8601String(),
+      });
 
       return userCredential;
     } on FirebaseAuthException catch (e) {
