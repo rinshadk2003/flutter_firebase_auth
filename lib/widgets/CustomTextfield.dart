@@ -44,6 +44,9 @@ class CoTextField extends StatelessWidget {
           horizontal: 16,
           vertical: 14,
         ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: const BorderSide(color: Colors.black),
+        )
       ),
     );
   }

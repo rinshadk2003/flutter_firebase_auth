@@ -35,16 +35,15 @@ class Homescreen extends StatelessWidget {
         actions: [
           TextButton(
             onPressed: () {
-              Navigator.pop(ctx); // Close dialog
+              Navigator.pop(ctx);
             },
             child: const Text('Cancel'),
           ),
           TextButton(
             onPressed: () async {
-              Navigator.pop(ctx); // Close dialog first
+              Navigator.pop(ctx);
 
               await context.read<AuthProvider>().logout();
-
               Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(builder: (_) => LoginScreen()),

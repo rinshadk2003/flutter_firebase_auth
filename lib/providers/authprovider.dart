@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthProvider extends ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -23,7 +24,7 @@ class AuthProvider extends ChangeNotifier {
         email: emailController.text.trim(),
         password: passwordController.text.trim(),
       );
-
+      setLoginStatus(true);
       return userCredential;
     } on FirebaseAuthException catch (e) {
       errorMessage = e.message;
@@ -32,6 +33,11 @@ class AuthProvider extends ChangeNotifier {
       isLoading = false;
       notifyListeners();
     }
+  }
+
+  Future<void> setLoginStatus(bool value) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('isLoggedIn', value);
   }
 
   Future<UserCredential?> registerWithEmail() async {
@@ -65,8 +71,8 @@ class AuthProvider extends ChangeNotifier {
       isLoading = true;
       errorMessage = null;
       notifyListeners();
-
       await _auth.signOut();
+      setLoginStatus(false);
     } catch (e) {
       errorMessage = e.toString();
       rethrow;
